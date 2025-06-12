@@ -54,11 +54,13 @@ h1 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  gap: 0px; /* 카드들이 겹치듯 모여있게 */
   margin-bottom: 30px;
-  flex-wrap: wrap; /* 화면이 작을 때 줄바꿈 허용 */
+  flex-wrap: nowrap;
   max-width: 100vw;
   box-sizing: border-box;
+  position: relative;
+  height: 260px; /* 중앙 정렬 및 카드 커질 공간 확보 */
 }
 
 .card-row-horizontal {
@@ -67,25 +69,52 @@ h1 {
 
 /* 카드 스타일 */
 .card {
-  width: 220px;
-  height: 220px;
-  max-width: 19vw; /* PC에서 5장이 한 줄에 들어가도록 */
-  max-height: 19vw;
-  min-width: 90px;
-  min-height: 90px;
-  perspective: 600px;
-  position: relative;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(40px) scale(0.8);
-  transition: opacity 0.5s, transform 0.5s;
+  width: 80px;
+  height: 80px;
+  max-width: 16vw;
+  max-height: 16vw;
+  min-width: 60px;
+  min-height: 60px;
+  margin-left: -20px; /* 카드가 겹치게 */
+  margin-right: -20px;
+  z-index: 1;
+  transition: 
+    opacity 0.5s, 
+    transform 0.5s cubic-bezier(0.4,1.6,0.4,1), 
+    width 0.5s, height 0.5s, 
+    margin 0.5s, z-index 0.2s;
   background: #fff;
   box-sizing: border-box;
+  position: relative;
 }
 
 .card.show {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+.card.selected {
+  z-index: 10;
+  width: 220px;
+  height: 220px;
+  max-width: 60vw;
+  max-height: 60vw;
+  min-width: 160px;
+  min-height: 160px;
+  margin-left: 0;
+  margin-right: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  transition: 
+    z-index 0s, 
+    width 0.5s, height 0.5s, 
+    margin 0.5s, 
+    left 0.5s, top 0.5s, 
+    transform 0.5s cubic-bezier(0.4,1.6,0.4,1),
+    box-shadow 0.5s;
 }
 
 /* 카드 앞면(이미지) 스타일 */
@@ -201,4 +230,84 @@ h1 {
   text-align: center;
   margin: 18px 0 18px 0;
   display: none;
+}
+
+/* 폭죽 애니메이션용 컨테이너 */
+.firework {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  pointer-events: none;
+  z-index: 20;
+}
+.firework.left {
+  left: -68px;
+  top: -68px;
+}
+.firework.right {
+  right: -68px;
+  top: -68px;
+}
+/* 폭죽 원형 파티클 */
+.firework-dot {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 0.95;
+  box-shadow: 0 0 24px 8px rgba(0,0,0,0.22), 0 0 0 4px #fff;
+  animation: firework-burst 1.8s cubic-bezier(0.4,1.6,0.4,1) forwards;
+  /* 불꽃놀이 꼬리 효과 */
+  background: radial-gradient(circle at 30% 30%, #fff 0%, var(--dot-color) 80%);
+}
+@keyframes firework-burst {
+  0% {
+    transform: scale(0.2) translate(0,0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  80% {
+    filter: blur(2px);
+  }
+  100% {
+    transform: scale(1.3) translate(var(--tx), var(--ty));
+    opacity: 0.5;
+    filter: blur(4px);
+  }
+}
+/* 물풍선 스타일 */
+.speech-bubble {
+  position: absolute;
+  right: -70px;
+  top: 50%;
+  left: auto;
+  transform: translateY(-50%);
+  background: #fff;
+  color: #e11d48;
+  font-family: 'NEXON Gothic', sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 10px 22px;
+  border-radius: 30px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  border: 2px solid #fbb6ce;
+  z-index: 30;
+  white-space: nowrap;
+}
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%) rotate(90deg);
+  border-width: 10px 12px 0 12px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+  filter: drop-shadow(0 2px 2px #fbb6ce);
 } 
