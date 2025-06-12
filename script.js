@@ -59,68 +59,6 @@ function scrambleCards(cards) {
   }, 100);
 }
 
-// 폭죽 애니메이션 생성 함수
-function showFireworks(card) {
-  // 좌우 상단에 폭죽 컨테이너 생성
-  ['left', 'right'].forEach(side => {
-    const firework = document.createElement('div');
-    firework.className = 'firework ' + side;
-    // 더 많은 색상과 파티클 개수, 불꽃놀이 느낌
-    const colors = [
-      '#fbbf24','#f87171','#60a5fa','#34d399','#f472b6','#facc15','#a78bfa',
-      '#f59e42','#e11d48','#6366f1','#06b6d4','#84cc16','#f472b6','#f43f5e',
-      '#fcd34d','#818cf8','#fca5a5','#f9fafb','#fef08a',
-      '#f472b6','#f43f5e','#fcd34d','#818cf8','#fca5a5','#f9fafb','#fef08a'
-    ];
-    const particleCount = 28;
-    for (let i = 0; i < particleCount; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'firework-dot';
-      // 색상 랜덤
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      dot.style.setProperty('--dot-color', color);
-      dot.style.background = `radial-gradient(circle at 30% 30%, #fff 0%, ${color} 80%)`;
-      // 각 파티클의 방향(각도) 지정
-      const angle = (Math.PI * 2 / particleCount) * i + Math.random() * 0.2;
-      const radius = 60 + Math.random() * 30; // 반경 랜덤
-      const tx = Math.cos(angle) * radius + 'px';
-      const ty = Math.sin(angle) * radius + 'px';
-      dot.style.setProperty('--tx', tx);
-      dot.style.setProperty('--ty', ty);
-      // 크기, 투명도, 애니메이션 속도 랜덤
-      const size = 14 + Math.random() * 18;
-      dot.style.width = size + 'px';
-      dot.style.height = size + 'px';
-      dot.style.opacity = 0.7 + Math.random() * 0.3;
-      dot.style.animationDuration = (1.3 + Math.random() * 0.7) + 's';
-      firework.appendChild(dot);
-    }
-    card.appendChild(firework);
-    // 애니메이션 후 폭죽 제거
-    setTimeout(() => firework.remove(), 2000);
-  });
-}
-
-// 폭죽 애니메이션 생성 함수 (반복)
-function startFireworksLoop(card) {
-  // 이미 루프가 있으면 중복 실행 방지
-  if (card.fireworkInterval) return;
-  // 최초 1회 즉시 실행
-  showFireworks(card);
-  // 1.2초마다 반복 실행
-  card.fireworkInterval = setInterval(() => {
-    showFireworks(card);
-  }, 1200);
-}
-
-// 폭죽 애니메이션 중지 함수
-function stopFireworksLoop(card) {
-  if (card.fireworkInterval) {
-    clearInterval(card.fireworkInterval);
-    card.fireworkInterval = null;
-  }
-}
-
 // 카드와 상태 초기화 및 애니메이션 실행 (가로 한 줄 배치)
 function resetGame() {
   // 8장 중 5장 무작위 선택
@@ -145,7 +83,6 @@ function resetGame() {
     // 카드 앞면 이미지 변경
     const frontImg = cardList[shuffledIdx].querySelector('.card-front');
     frontImg.src = selectedImages[i];
-    stopFireworksLoop(cardList[shuffledIdx]);
     // 기존 물풍선 제거
     const oldBubble = cardList[shuffledIdx].querySelector('.speech-bubble');
     if (oldBubble) oldBubble.remove();
@@ -188,7 +125,6 @@ cards.forEach((card, idx) => {
     cards.forEach(c => {
       c.classList.remove('flipped','selected');
       c.style.pointerEvents = 'none';
-      stopFireworksLoop(c); // 기존 폭죽 중지
       // 기존 물풍선 제거
       const oldBubble = c.querySelector('.speech-bubble');
       if (oldBubble) oldBubble.remove();
@@ -201,8 +137,6 @@ cards.forEach((card, idx) => {
     askNameEl.style.display = 'none';
     preQuestionEl.style.display = 'none';
     if (timer) clearInterval(timer);
-    // 폭죽 애니메이션 반복 실행
-    startFireworksLoop(card);
     // 물풍선 추가
     const bubble = document.createElement('div');
     bubble.className = 'speech-bubble';
