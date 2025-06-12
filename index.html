@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+  <meta charset="UTF-8">
+  <!-- 반응형 웹을 위한 viewport 설정 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 문서의 제목을 설정 -->
+  <title>모두모여댕댕, 원아맞추기 이벤트!</title>
+  <!-- 넥슨고딕 웹폰트 불러오기 -->
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/NEXON_Gothic.css" rel="stylesheet">
+  <!-- 외부 CSS 파일 연결 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 게임 전체를 감싸는 컨테이너 -->
+  <div class="container">
+    <!-- 게임 제목 -->
+    <h1>모두모여댕댕, 원아맞추기 이벤트!</h1>
+    <!-- 부제목 -->
+    <p class="subtitle">
+      우리 아이와 친하게 지내는 친구들 이름을 맞추고<br>
+      행운도 가져가세요~
+    </p>
+    <!-- 시계 이모티콘과 카운트다운 타이머 -->
+    <div class="timer">
+      <span class="clock">⏰</span>
+      <span id="countdown">5</span>
+    </div>
+    <!-- 3초 카운트다운 전 안내 문구 -->
+    <div id="pre-question" class="pre-question">자! 이 친구의 이름은 무엇일까요?</div>
+    <!-- 카드 5장을 담는 카드 영역: 가로로 한 줄 배치 -->
+    <div class="card-area card-row-horizontal">
+      <div class="card" data-index="0">
+        <div class="card-back"><img src="mmdd.jpg" alt="카드뒷면" class="back-img"></div>
+        <img class="card-front" src="KakaoTalk_20250612_124259442.jpg" alt="강아지1">
+      </div>
+      <div class="card" data-index="1">
+        <div class="card-back"><img src="mmdd.jpg" alt="카드뒷면" class="back-img"></div>
+        <img class="card-front" src="KakaoTalk_20250612_124259442_01.jpg" alt="강아지2">
+      </div>
+      <div class="card" data-index="2">
+        <div class="card-back"><img src="mmdd.jpg" alt="카드뒷면" class="back-img"></div>
+        <img class="card-front" src="KakaoTalk_20250612_124259442_02.jpg" alt="강아지3">
+      </div>
+      <div class="card" data-index="3">
+        <div class="card-back"><img src="mmdd.jpg" alt="카드뒷면" class="back-img"></div>
+        <img class="card-front" src="KakaoTalk_20250612_124259442_03.jpg" alt="강아지4">
+      </div>
+      <div class="card" data-index="4">
+        <div class="card-back"><img src="mmdd.jpg" alt="카드뒷면" class="back-img"></div>
+        <img class="card-front" src="KakaoTalk_20250612_124259442_04.jpg" alt="강아지5">
+      </div>
+    </div>
+    <!-- 3초 후에 나타날 이름 입력 안내 문구 -->
+    <div id="ask-name" class="ask-name">
+      이름을 말해주세요.
+    </div>
+    <!-- 하단에 다시시작 버튼 추가 -->
+    <button id="restart-btn" class="restart-btn">다시시작</button>
+  </div>
+  <!-- 외부 JS 파일 연결 -->
+  <script src="script.js"></script>
+</body>
+</html> 
